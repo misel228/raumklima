@@ -9,7 +9,7 @@ def get_and_print():
     for i in range(1, 9, 1):
         chan_data = data.get_channel_data(i)
         if chan_data is not None:
-            print('{:d}_temp.value {:0.1f}'.format(i, chan_data.temperature))
+            print('temp_{:d}.value {:0.1f}'.format(i, chan_data.temperature))
             # print('{:d}_humidity {:d}'.format(i, chan_data.humidity))
     #print('.')
 
@@ -30,7 +30,7 @@ def output_config():
     for i in range(1, 9, 1):
         chan_data = data.get_channel_data(i)
         if chan_data is not None:
-            print('{:d}_temp.label {:s}'.format(i, sensors[i]))
+            print('temp_{:d}.label {:s}'.format(i, sensors[i]))
 
 
 
