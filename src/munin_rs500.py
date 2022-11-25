@@ -2,6 +2,7 @@
 
 from rs500reader.reader import Rs500Reader
 import sys
+import os
 
 def get_and_print():
     reader = Rs500Reader()
@@ -21,16 +22,14 @@ def output_config():
     print("graph_category sensors ")
     print("graph_info appartment temps")
 
-    text_file = open("/etc/munin/plugin-conf.d/sensor_names.txt", "r")
-    sensors = text_file.read().splitlines()
-    sensors.insert(0, "")
-
     reader = Rs500Reader()
     data = reader.get_data()
     for i in range(1, 9, 1):
         chan_data = data.get_channel_data(i)
         if chan_data is not None:
-            print('temp_{:d}.label {:s}'.format(i, sensors[i]))
+            # get the label from the environment as set up in plugin-conf
+            env_label = 'temp_' + str(i) + '_label'
+            print('temp_{:d}.label {:s}'.format(i, os.getenv(env_label)))
 
 
 
@@ -40,4 +39,3 @@ if __name__ == '__main__':
     else:
         if sys.argv[1] == 'config':
             output_config()
-        
